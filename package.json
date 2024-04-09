@@ -10,11 +10,22 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.4",
+		"@emotion/styled": "^11.11.5",
+		"@fontsource/inter": "^5.0.17",
+		"@mui/joy": "5.0.0-beta.32",
+		"buffer": "^6.0.3",
 		"crypto-browserify": "^3.12.0",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"react-icons": "^5.0.1",
+		"react-router-dom": "^6.22.3",
+		"readable-stream": "^4.5.2",
+		"wx-randombytes": "^0.0.2"
 	},
 	"devDependencies": {
+		"@types/node": "^20.12.5",
+		"@types/randombytes": "^2.0.3",
 		"@types/react": "^18.2.66",
 		"@types/react-dom": "^18.2.22",
 		"@typescript-eslint/eslint-plugin": "^7.2.0",
