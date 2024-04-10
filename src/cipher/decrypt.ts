@@ -1,5 +1,6 @@
 import { ALGORITHM, ENCRYPTION_DECORATOR } from './constants'
 import deriveKeyFromPassword from './derive-key-from-password'
+import crypto from 'crypto'
 
 function decrypt(cipherText: string, password: string): string | null {
 	try {
@@ -7,7 +8,7 @@ function decrypt(cipherText: string, password: string): string | null {
 
 		if (cipherTextParts.length !== 2) {
 			console.error(
-				'Could not determine the beginning of the cipherText. Maybe not encrypted by this method.',
+				'[cipher/decrypt-aes-gcm] Could not determine the beginning of the cipherText. Maybe not encrypted by this method.',
 			)
 			return null
 		} else {
@@ -17,11 +18,11 @@ function decrypt(cipherText: string, password: string): string | null {
 		const inputData: Buffer = Buffer.from(cipherText, 'hex')
 
 		// Split cipherText into partials
-		const salt: Buffer = inputData.slice(0, 64)
-		const iv: Buffer = inputData.slice(64, 80)
-		const authTag: Buffer = inputData.slice(80, 96)
+		const salt: Buffer = inputData.subarray(0, 64)
+		const iv: Buffer = inputData.subarray(64, 80)
+		const authTag: Buffer = inputData.subarray(80, 96)
 		const iterations: number = parseInt(
-			inputData.slice(96, 101).toString('utf-8'),
+			inputData.subarray(96, 101).toString('utf8'),
 			10,
 		)
 		const encryptedData: Buffer = inputData.slice(101)
@@ -34,28 +35,15 @@ function decrypt(cipherText: string, password: string): string | null {
 		)
 
 		// Create decipher
-		// @ts-ignore: TS expects the wrong createDecipher return type here
-		const decipher: DecipherGCM = crypto.createDecipheriv(
-			ALGORITHM,
-			decryptionKey,
-			iv,
-		)
+		const decipher = crypto.createDecipheriv(ALGORITHM, decryptionKey, iv)
 		decipher.setAuthTag(authTag)
 
 		// Decrypt data
-		// @ts-ignore: TS expects the wrong createDecipher return type here
-		const decrypted =
-			decipher.update(encryptedData, 'binary', 'utf-8') +
-			decipher.final('utf-8')
+		const decrypted = decipher.update(encryptedData) + decipher.final('utf8')
 
-		try {
-			return JSON.parse(decrypted)
-		} catch (error) {
-			return decrypted
-		}
+		return decrypted
 	} catch (error) {
-		console.error('Decryption failed!')
-		console.error(error)
+		console.error('[cipher/decrypt-aes-gcm] encryption failed', error)
 		return null
 	}
 }

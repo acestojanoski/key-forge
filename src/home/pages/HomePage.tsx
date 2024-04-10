@@ -1,25 +1,24 @@
 import {
 	Box,
 	Button,
+	Checkbox,
 	FormControl,
 	FormLabel,
 	Textarea,
-	Typography,
 } from '@mui/joy'
 import { useState } from 'react'
 import EncryptModal from '../components/EncryptModal'
 import encrypt from '../../cipher/encrypt'
 import generateDek from '../../cipher/generate-dek'
+import Result from '../components/Result'
+import { EncryptionResult } from '../types'
 
-type Result = {
-	encryptedData: string
-	encryptedDek: string
-}
-
+// TODO: Use web workers to improve performance
 const HomePage = () => {
 	const [plainText, setPlainText] = useState('')
 	const [isEncryptModalOpen, setIsEncryptModalOpen] = useState(false)
-	const [result, setResult] = useState<Result | null>(null)
+	const [result, setResult] = useState<EncryptionResult | null>(null)
+	const [isDekEnabled, setIsDekEnabled] = useState(true)
 
 	const handlePlainTextChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
 		event,
@@ -35,7 +34,25 @@ const HomePage = () => {
 		setIsEncryptModalOpen(true)
 	}
 
+	const handleToggleDekUsage = () => {
+		setIsDekEnabled((previousValue) => !previousValue)
+	}
+
 	const handleEncrypt = (password: string) => {
+		if (!isDekEnabled) {
+			const encryptedData = encrypt(plainText, password)
+
+			if (!encryptedData) {
+				return
+			}
+
+			setResult({
+				encryptedData,
+			})
+			setPlainText('')
+			return
+		}
+
 		const dek = generateDek()
 		const encryptedData = encrypt(plainText, dek)
 
@@ -65,37 +82,22 @@ const HomePage = () => {
 					onChange={handlePlainTextChange}
 				/>
 			</FormControl>
-			<Button variant="solid" onClick={handleOpenEncryptModal}>
-				Encrypt
-			</Button>
-			{result && (
-				<Box width="100%" display="flex" flexDirection="column" gap="2rem">
-					<Typography
-						level="body-sm"
-						sx={{
-							overflow: 'hidden',
-							display: '-webkit-box',
-							'-webkit-line-clamp': 1,
-							'-webkit-box-orient': 'vertical',
-							msTextOverflow: 'ellipsis',
-						}}
-					>
-						Encrypted Data Encryption Key: {result.encryptedDek}
-					</Typography>
-					<Typography
-						level="body-sm"
-						sx={{
-							overflow: 'hidden',
-							display: '-webkit-box',
-							'-webkit-line-clamp': 1,
-							'-webkit-box-orient': 'vertical',
-							msTextOverflow: 'ellipsis',
-						}}
-					>
-						Encrypted Data: {result.encryptedData}
-					</Typography>
-				</Box>
-			)}
+			<Box
+				display="flex"
+				justifyContent="space-between"
+				alignItems="center"
+				gap="1rem"
+			>
+				<Checkbox
+					label="Use Data Encryption Key"
+					checked={isDekEnabled}
+					onChange={handleToggleDekUsage}
+				/>
+				<Button variant="solid" onClick={handleOpenEncryptModal}>
+					Encrypt
+				</Button>
+			</Box>
+			{result && <Result result={result} />}
 			<EncryptModal
 				isOpen={isEncryptModalOpen}
 				setIsOpen={setIsEncryptModalOpen}

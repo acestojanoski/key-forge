@@ -44,7 +44,9 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 		setIsPasswordVisible(false)
 	}
 
-	const handleEncrypt = () => {
+	const handleEncrypt: React.FormEventHandler = (event) => {
+		event.preventDefault()
+
 		if (!password) {
 			return
 		}
@@ -59,7 +61,13 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 				<ModalClose />
 				<DialogTitle>Encrypt</DialogTitle>
 				<DialogContent>
-					<Box display="flex" flexDirection="column" gap="1rem">
+					<Box
+						component="form"
+						display="flex"
+						flexDirection="column"
+						gap="1rem"
+						onSubmit={handleEncrypt}
+					>
 						<FormControl>
 							<FormLabel>Password</FormLabel>
 							<Input
@@ -73,7 +81,7 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 								}
 							/>
 						</FormControl>
-						<Button variant="solid" color="primary" onClick={handleEncrypt}>
+						<Button type="submit" variant="solid" color="primary">
 							Encrypt
 						</Button>
 					</Box>

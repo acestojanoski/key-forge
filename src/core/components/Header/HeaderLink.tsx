@@ -10,7 +10,6 @@ const HeaderLink: React.FC<React.PropsWithChildren<HeaderLinkProps>> = ({
 	children,
 }) => {
 	const { pathname } = useLocation()
-	console.log({ pathname, href })
 	const isActive = pathname === href
 
 	return (
@@ -18,7 +17,7 @@ const HeaderLink: React.FC<React.PropsWithChildren<HeaderLinkProps>> = ({
 			<Typography
 				color={isActive ? 'primary' : 'neutral'}
 				component="span"
-				level="body-lg"
+				level="body-md"
 			>
 				{children}
 			</Typography>

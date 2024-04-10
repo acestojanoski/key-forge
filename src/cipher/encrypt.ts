@@ -4,14 +4,8 @@ import randomBytes from 'randombytes'
 import crypto from 'crypto'
 import { ALGORITHM, ENCRYPTION_DECORATOR } from './constants'
 
-function encrypt(plainText: string | object, password: string): string | null {
+function encrypt(plainText: string, password: string): string | null {
 	try {
-		if (typeof plainText === 'object') {
-			plainText = JSON.stringify(plainText)
-		} else {
-			plainText = String(plainText)
-		}
-
 		// Generate random salt -> 64 bytes
 		const salt = randomBytes(64)
 
@@ -51,7 +45,7 @@ function encrypt(plainText: string | object, password: string): string | null {
 
 		return ENCRYPTION_DECORATOR + output
 	} catch (error: any) {
-		console.log('[cipher/encrypt-aes-gcm] encryption failed', error)
+		console.error('[cipher/encrypt-aes-gcm] encryption failed', error)
 		return null
 	}
 }
