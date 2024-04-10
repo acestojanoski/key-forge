@@ -14,17 +14,20 @@ import {
 import { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa6'
 
-type EncryptModalProps = {
+type DecryptModalProps = {
 	isOpen: boolean
 	setIsOpen: (value: boolean) => void
-	onEncrypt: (password: string) => void
+	onDecrypt: (password: string, encryptedDek?: string) => void
+	isDekEnabled: boolean
 }
 
-const EncryptModal: React.FC<EncryptModalProps> = ({
+const DecryptModal: React.FC<DecryptModalProps> = ({
 	isOpen,
 	setIsOpen,
-	onEncrypt,
+	onDecrypt,
+	isDekEnabled,
 }) => {
+	const [encryptedDek, setEncryptedDek] = useState('')
 	const [password, setPassword] = useState('')
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
@@ -34,6 +37,12 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 		setPassword(event.target.value)
 	}
 
+	const handleEncryptedDekChange: React.ChangeEventHandler<HTMLInputElement> = (
+		event,
+	) => {
+		setEncryptedDek(event.target.value)
+	}
+
 	const handleTogglePasswordVisibility = () => {
 		setIsPasswordVisible((previousValue) => !previousValue)
 	}
@@ -41,33 +50,49 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 	const handleClose = () => {
 		setIsOpen(false)
 		setPassword('')
+		setEncryptedDek('')
 		setIsPasswordVisible(false)
 	}
 
-	const handleEncrypt: React.FormEventHandler = (event) => {
+	const handleDecrypt: React.FormEventHandler = (event) => {
 		event.preventDefault()
 
 		if (!password) {
 			return
 		}
 
+		if (isDekEnabled && !encryptedDek) {
+			return
+		}
+
 		handleClose()
-		onEncrypt(password)
+		onDecrypt(password, encryptedDek)
 	}
 
 	return (
 		<Modal open={isOpen} onClose={handleClose}>
 			<ModalDialog size="lg">
 				<ModalClose />
-				<DialogTitle>Encrypt</DialogTitle>
+				<DialogTitle>Decrypt</DialogTitle>
 				<DialogContent>
 					<Box
 						component="form"
 						display="flex"
 						flexDirection="column"
 						gap="1rem"
-						onSubmit={handleEncrypt}
+						onSubmit={handleDecrypt}
 					>
+						{isDekEnabled && (
+							<FormControl>
+								<FormLabel>Encrypted Data Encryption Key</FormLabel>
+								<Input
+									required
+									type="text"
+									value={encryptedDek}
+									onChange={handleEncryptedDekChange}
+								/>
+							</FormControl>
+						)}
 						<FormControl>
 							<FormLabel>Password</FormLabel>
 							<Input
@@ -83,7 +108,7 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 							/>
 						</FormControl>
 						<Button type="submit" variant="solid" color="primary">
-							Encrypt
+							Decrypt
 						</Button>
 					</Box>
 				</DialogContent>
@@ -92,4 +117,4 @@ const EncryptModal: React.FC<EncryptModalProps> = ({
 	)
 }
 
-export default EncryptModal
+export default DecryptModal

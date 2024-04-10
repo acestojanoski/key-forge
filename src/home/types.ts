@@ -1,4 +1,5 @@
 export type EncryptionResult = {
-	encryptedData: string
+	encryptedData?: string
 	encryptedDek?: string
+	errorMessage?: string
 }

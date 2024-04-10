@@ -14,7 +14,7 @@ import Result from '../components/Result'
 import { EncryptionResult } from '../types'
 
 // TODO: Use web workers to improve performance
-const HomePage = () => {
+const HomePage: React.FC = () => {
 	const [plainText, setPlainText] = useState('')
 	const [isEncryptModalOpen, setIsEncryptModalOpen] = useState(false)
 	const [result, setResult] = useState<EncryptionResult | null>(null)
@@ -43,6 +43,9 @@ const HomePage = () => {
 			const encryptedData = encrypt(plainText, password)
 
 			if (!encryptedData) {
+				setResult({
+					errorMessage: 'Encryption failed.',
+				})
 				return
 			}
 
@@ -57,12 +60,18 @@ const HomePage = () => {
 		const encryptedData = encrypt(plainText, dek)
 
 		if (!encryptedData) {
+			setResult({
+				errorMessage: 'Encryption failed.',
+			})
 			return
 		}
 
 		const encryptedDek = encrypt(dek, password)
 
 		if (!encryptedDek) {
+			setResult({
+				errorMessage: 'DEK encryption failed.',
+			})
 			return
 		}
 
