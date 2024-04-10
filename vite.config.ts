@@ -18,7 +18,15 @@ export default defineConfig({
 			version: 'v0.0.0',
 		},
 	},
-	plugins: [react(), VitePWA({ registerType: 'autoUpdate' })],
+	plugins: [
+		react(),
+		VitePWA({
+			registerType: 'autoUpdate',
+			manifest: {
+				theme_color: '#ffffff',
+			},
+		}),
+	],
 	server: {
 		port: 3000,
 		open: true,

@@ -6,14 +6,23 @@ import {
 	IconButton,
 	ModalClose,
 } from '@mui/joy'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa6'
 import menuConfig from '../../constants/menu-config'
 import HeaderLink from './HeaderLink'
 import Logo from '../Logo'
+import { useLocation } from 'react-router-dom'
 
 const Mobile = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const location = useLocation()
+
+	useEffect(
+		function closeMenuOnLocationChange() {
+			setIsMenuOpen(false)
+		},
+		[location],
+	)
 
 	const handleOpenMenu = () => {
 		setIsMenuOpen(true)
