@@ -2,6 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import theme from './src/core/theme'
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	resolve: {
@@ -22,8 +26,25 @@ export default defineConfig({
 		react(),
 		VitePWA({
 			registerType: 'autoUpdate',
+			includeAssets: ['favicon.png', 'logo-512x512.png'],
 			manifest: {
-				theme_color: '#ffffff',
+				name: 'KeyForge',
+				short_name: 'KeyForge',
+				description: 'Data encryption tool.',
+				theme_color: theme.colorSchemes.dark.palette.background.body,
+				background_color: theme.colorSchemes.dark.palette.background.body,
+				icons: [
+					{
+						src: 'favicon.png',
+						sizes: '150x150',
+						type: 'image/png',
+					},
+					{
+						src: 'logo-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+					},
+				],
 			},
 		}),
 	],
