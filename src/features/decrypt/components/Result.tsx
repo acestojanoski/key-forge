@@ -1,6 +1,6 @@
 import { Box } from '@mui/joy'
 import { DecryptionResult } from '../types'
-import ResultItem from '../../core/components/ResultItem'
+import ResultItem from '../../../common/components/ResultItem'
 
 type ResultProps = {
 	result: DecryptionResult

@@ -1,14 +1,14 @@
-import { ALGORITHM, ENCRYPTION_DECORATOR } from './constants'
+import { ALGORITHM, ENCRYPTION_MARKER } from './constants'
 import deriveKeyFromPassword from './derive-key-from-password'
 import crypto from 'crypto'
 
 function decrypt(cipherText: string, password: string): string | null {
 	try {
-		const cipherTextParts = cipherText.split(ENCRYPTION_DECORATOR)
+		const cipherTextParts = cipherText.split(ENCRYPTION_MARKER)
 
 		if (cipherTextParts.length !== 2) {
 			console.error(
-				'[cipher/decrypt-aes-gcm] Could not determine the beginning of the cipherText. Maybe not encrypted by this method.',
+				'[cipher/decrypt] Could not determine the beginning of the cipherText. Maybe not encrypted by this method.',
 			)
 			return null
 		} else {
@@ -25,14 +25,10 @@ function decrypt(cipherText: string, password: string): string | null {
 			inputData.subarray(96, 101).toString('utf8'),
 			10,
 		)
-		const encryptedData: Buffer = inputData.slice(101)
+		const encryptedData: Buffer = inputData.subarray(101)
 
 		// Derive key
-		const decryptionKey = deriveKeyFromPassword(
-			password,
-			salt,
-			Math.floor(iterations * 0.47 + 1337),
-		)
+		const decryptionKey = deriveKeyFromPassword(password, salt, iterations)
 
 		// Create decipher
 		const decipher = crypto.createDecipheriv(ALGORITHM, decryptionKey, iv)
@@ -43,7 +39,7 @@ function decrypt(cipherText: string, password: string): string | null {
 
 		return decrypted
 	} catch (error) {
-		console.error('[cipher/decrypt-aes-gcm] encryption failed', error)
+		console.error('[cipher/decrypt] encryption failed', error)
 		return null
 	}
 }

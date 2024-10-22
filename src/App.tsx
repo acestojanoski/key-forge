@@ -1,12 +1,12 @@
 import '@fontsource/inter'
-import '../styles/global.css'
+import './styles/global.css'
 import './polyfills'
 
 import { RouterProvider } from 'react-router-dom'
-import router from './router'
 import { CssVarsProvider } from '@mui/joy/styles'
 import CssBaseline from '@mui/joy/CssBaseline'
-import theme from './theme'
+import theme from './common/theme'
+import router from './common/router'
 
 const App: React.FC = () => {
 	return (

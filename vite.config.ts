@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import theme from './src/core/theme'
+import theme from './src/common/theme'
 
 // https://vitejs.dev/config/
 export default defineConfig({

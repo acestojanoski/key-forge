@@ -2,7 +2,7 @@ import deriveKeyFromPassword from './derive-key-from-password'
 import { Buffer } from 'buffer'
 import randomBytes from 'randombytes'
 import crypto from 'crypto'
-import { ALGORITHM, ENCRYPTION_DECORATOR } from './constants'
+import { ALGORITHM, ENCRYPTION_MARKER } from './constants'
 
 function encrypt(plainText: string, password: string): string | null {
 	try {
@@ -16,11 +16,7 @@ function encrypt(plainText: string, password: string): string | null {
 		const iterations = Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000
 
 		// Derive encryption key
-		const encryptionKey = deriveKeyFromPassword(
-			password,
-			salt,
-			Math.floor(iterations * 0.47 + 1337),
-		)
+		const encryptionKey = deriveKeyFromPassword(password, salt, iterations)
 
 		// Create cipher
 		const cipher = crypto.createCipheriv(ALGORITHM, encryptionKey, iv)
@@ -43,9 +39,9 @@ function encrypt(plainText: string, password: string): string | null {
 			encryptedData,
 		]).toString('hex')
 
-		return ENCRYPTION_DECORATOR + output
+		return ENCRYPTION_MARKER + output
 	} catch (error: any) {
-		console.error('[cipher/encrypt-aes-gcm] encryption failed', error)
+		console.error('[cipher/encrypt] encryption failed', error)
 		return null
 	}
 }

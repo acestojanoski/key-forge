@@ -8,10 +8,10 @@ import {
 } from '@mui/joy'
 import { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa6'
-import menuConfig from '../../constants/menu-config'
 import HeaderLink from './HeaderLink'
 import Logo from '../Logo'
 import { useLocation } from 'react-router-dom'
+import menuConfig from '../../constants/menu-config'
 
 const Mobile = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)

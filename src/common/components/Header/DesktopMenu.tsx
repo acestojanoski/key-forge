@@ -1,6 +1,6 @@
 import { Box } from '@mui/joy'
-import menuConfig from '../../constants/menu-config'
 import HeaderLink from './HeaderLink'
+import menuConfig from '../../constants/menu-config'
 
 const DesktopMenu = () => {
 	return (

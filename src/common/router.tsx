@@ -2,8 +2,11 @@ import { createHashRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
 import dynamic from './hoc/dynamic'
 
-const HomePage = dynamic(() => import('../home/pages/HomePage'))
-const DecryptPage = dynamic(() => import('../decrypt/pages/DecryptPage'))
+const HomePage = dynamic(() => import('../features/encrypt/pages/HomePage'))
+
+const DecryptPage = dynamic(
+	() => import('../features/decrypt/pages/DecryptPage'),
+)
 
 const router = createHashRouter([
 	{
