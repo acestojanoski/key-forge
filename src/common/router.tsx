@@ -8,6 +8,8 @@ const DecryptPage = dynamic(
 	() => import('../features/decrypt/pages/DecryptPage'),
 )
 
+const AboutPage = dynamic(() => import('../features/about/pages/AboutPage'))
+
 const router = createHashRouter([
 	{
 		path: '/',
@@ -20,6 +22,10 @@ const router = createHashRouter([
 			{
 				path: 'decrypt',
 				element: <DecryptPage />,
+			},
+			{
+				path: 'about',
+				element: <AboutPage />,
 			},
 		],
 	},

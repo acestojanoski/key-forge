@@ -7,6 +7,10 @@ const menuConfig = [
 		text: 'Decrypt',
 		href: '/decrypt',
 	},
+	{
+		text: 'About',
+		href: '/about',
+	},
 ]
 
 export default menuConfig
