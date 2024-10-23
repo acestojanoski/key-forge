@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/joy'
 import { QRCodeSVG } from 'qrcode.react'
-import { useState } from 'react'
 import { FaCheck, FaCopy } from 'react-icons/fa6'
+import useCopyToClipboard from '../../../common/hooks/use-copy-to-clipboard'
 
 const BlockchainCard = ({
 	symbol,
@@ -10,27 +10,10 @@ const BlockchainCard = ({
 	symbol: string
 	address: string
 }) => {
-	const [copied, setCopied] = useState(false)
+	const { copied, copyToClipboard } = useCopyToClipboard()
 
-	const handleCopy = async () => {
-		if (copied) {
-			return
-		}
-
-		if (typeof navigator?.clipboard?.writeText !== 'function') {
-			return
-		}
-
-		try {
-			await navigator.clipboard.writeText(address)
-
-			setCopied(true)
-			setTimeout(() => {
-				setCopied(false)
-			}, 1500)
-		} catch {
-			console.error('Cannot copy to clipboard...')
-		}
+	const handleCopyToClipboard = () => {
+		copyToClipboard(address)
 	}
 
 	return (
@@ -80,7 +63,7 @@ const BlockchainCard = ({
 			</Typography>
 			<Button
 				startDecorator={copied ? <FaCheck /> : <FaCopy />}
-				onClick={handleCopy}
+				onClick={handleCopyToClipboard}
 			>
 				{copied ? 'Copied' : 'Copy'}
 			</Button>

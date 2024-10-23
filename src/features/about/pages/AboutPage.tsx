@@ -19,7 +19,7 @@ const AboutPage = () => {
 			<Typography component="p" level="body-md" paddingBottom="20px">
 				All encryption happens client-side, directly in your browser. No data is
 				stored or transmitted to any servers, and nothing is saved in your
-				browser storage—everything is kept only in memory for the duration of
+				browser storage. Everything is kept only in memory for the duration of
 				your session, ensuring complete privacy and control over your data.
 			</Typography>
 		</Box>

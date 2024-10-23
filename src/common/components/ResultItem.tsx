@@ -1,6 +1,6 @@
 import { Box, IconButton, Typography } from '@mui/joy'
-import { useState } from 'react'
 import { FaCheck, FaCopy } from 'react-icons/fa6'
+import useCopyToClipboard from '../hooks/use-copy-to-clipboard'
 
 type ResultItemProps = {
 	label: string
@@ -8,19 +8,10 @@ type ResultItemProps = {
 }
 
 const ResultItem: React.FC<ResultItemProps> = ({ label, value }) => {
-	const [copied, setCopied] = useState(false)
+	const { copied, copyToClipboard } = useCopyToClipboard()
 
 	const handleCopyToClipboard = async () => {
-		try {
-			await navigator.clipboard.writeText(value)
-
-			setCopied(true)
-			setTimeout(() => {
-				setCopied(false)
-			}, 1000)
-		} catch {
-			console.error('Cannot copy to clipboard...')
-		}
+		copyToClipboard(value)
 	}
 
 	return (
