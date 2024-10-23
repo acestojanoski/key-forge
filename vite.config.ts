@@ -26,7 +26,14 @@ export default defineConfig({
 		react(),
 		VitePWA({
 			registerType: 'autoUpdate',
-			includeAssets: ['favicon.png', 'logo-512x512.png'],
+			includeAssets: [
+				'favicon.png',
+				'logo-512x512.png',
+				'btc-qr-code.png',
+				'eth-qr-code.png',
+				'sol-qr-code.png',
+				'ton-qr-code.png',
+			],
 			manifest: {
 				name: 'KeyForge',
 				short_name: 'KeyForge',
