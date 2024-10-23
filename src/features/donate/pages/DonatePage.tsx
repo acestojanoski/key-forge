@@ -51,9 +51,8 @@ const DonatePage = () => {
 					{blockchains.map((blockchain, index) => (
 						<TabPanel key={blockchain.address} value={index}>
 							<BlockchainCard
-								coin={blockchain.symbol}
+								symbol={blockchain.symbol}
 								address={blockchain.address}
-								qrCodeSrc={blockchain.qrCodeSrc}
 							/>
 						</TabPanel>
 					))}

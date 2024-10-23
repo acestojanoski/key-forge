@@ -8,15 +8,15 @@ type ResultItemProps = {
 }
 
 const ResultItem: React.FC<ResultItemProps> = ({ label, value }) => {
-	const [isCopiedToClipboard, setIsCopiedToClipboard] = useState(false)
+	const [copied, setCopied] = useState(false)
 
 	const handleCopyToClipboard = async () => {
 		try {
 			await navigator.clipboard.writeText(value)
 
-			setIsCopiedToClipboard(true)
+			setCopied(true)
 			setTimeout(() => {
-				setIsCopiedToClipboard(false)
+				setCopied(false)
 			}, 1000)
 		} catch {
 			console.error('Cannot copy to clipboard...')
@@ -42,7 +42,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ label, value }) => {
 				{value}
 			</Typography>
 			<IconButton onClick={handleCopyToClipboard}>
-				{isCopiedToClipboard ? <FaCheck /> : <FaCopy />}
+				{copied ? <FaCheck /> : <FaCopy />}
 			</IconButton>
 		</Box>
 	)

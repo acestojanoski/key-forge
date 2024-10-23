@@ -26,18 +26,12 @@ export default defineConfig({
 		react(),
 		VitePWA({
 			registerType: 'autoUpdate',
-			includeAssets: [
-				'favicon.png',
-				'logo-512x512.png',
-				'btc-qr-code.png',
-				'eth-qr-code.png',
-				'sol-qr-code.png',
-				'ton-qr-code.png',
-			],
+			includeAssets: ['favicon.png', 'logo-512x512.png'],
 			manifest: {
 				name: 'KeyForge',
 				short_name: 'KeyForge',
-				description: 'Data encryption tool.',
+				description:
+					'Effortlessly encrypt and decrypt text in an instant with our user-friendly, open-source tool.',
 				theme_color: theme.colorSchemes.dark.palette.background.body,
 				background_color: theme.colorSchemes.dark.palette.background.body,
 				icons: [
