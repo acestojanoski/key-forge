@@ -1,37 +1,19 @@
 import { Box, Button, Typography } from '@mui/joy'
-import { useState } from 'react'
-import { FaCopy } from 'react-icons/fa6'
+import { QRCodeSVG } from 'qrcode.react'
+import { FaCheck, FaCopy } from 'react-icons/fa6'
+import useCopyToClipboard from '../../../common/hooks/use-copy-to-clipboard'
 
 const BlockchainCard = ({
-	coin,
+	symbol,
 	address,
-	qrCodeSrc,
 }: {
-	coin: string
+	symbol: string
 	address: string
-	qrCodeSrc: string
 }) => {
-	const [copied, setCopied] = useState(false)
+	const { copied, copyToClipboard } = useCopyToClipboard()
 
-	const handleCopy = async () => {
-		if (copied) {
-			return
-		}
-
-		if (typeof navigator?.clipboard?.writeText !== 'function') {
-			return
-		}
-
-		try {
-			await navigator.clipboard.writeText(address)
-
-			setCopied(true)
-			setTimeout(() => {
-				setCopied(false)
-			}, 1500)
-		} catch {
-			// Swallow the error
-		}
+	const handleCopyToClipboard = () => {
+		copyToClipboard(address)
 	}
 
 	return (
@@ -53,18 +35,20 @@ const BlockchainCard = ({
 					paddingBottom: '20px',
 				}}
 			>
-				{coin}
+				{symbol}
 			</Typography>
-			<Box
-				component="img"
-				alt={`${coin} QR code`}
-				src={qrCodeSrc}
-				maxWidth="300px"
-				maxHeight="300px"
-				sx={{
-					maxWidth: '200px',
-					maxHeight: '200px',
+			<QRCodeSVG
+				value={address}
+				marginSize={4}
+				imageSettings={{
+					src: '/favicon.png',
+					excavate: true,
+					width: 40,
+					height: 40,
 				}}
+				level="H"
+				width={180}
+				height={180}
 			/>
 			<Typography
 				level="body-sm"
@@ -77,7 +61,10 @@ const BlockchainCard = ({
 			>
 				{address}
 			</Typography>
-			<Button startDecorator={<FaCopy />} onClick={handleCopy}>
+			<Button
+				startDecorator={copied ? <FaCheck /> : <FaCopy />}
+				onClick={handleCopyToClipboard}
+			>
 				{copied ? 'Copied' : 'Copy'}
 			</Button>
 		</Box>
