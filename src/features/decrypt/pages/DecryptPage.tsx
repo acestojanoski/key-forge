@@ -15,7 +15,7 @@ import Result from '../components/Result'
 // TODO: Use web workers to improve performance
 const DecryptPage = () => {
 	const [encryptedData, setEncryptedData] = useState('')
-	const [isDekEnabled, setIsDekEnabled] = useState(true)
+	const [isDekEnabled, setIsDekEnabled] = useState(false)
 	const [isDecryptModalOpen, setIsDecryptModalOpen] = useState(false)
 	const [result, setResult] = useState<DecryptionResult | null>(null)
 

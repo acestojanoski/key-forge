@@ -11,6 +11,10 @@ const menuConfig = [
 		text: 'About',
 		href: '/about',
 	},
+	{
+		text: 'Donate',
+		href: '/donate',
+	},
 ]
 
 export default menuConfig

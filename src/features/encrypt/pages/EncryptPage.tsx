@@ -14,11 +14,11 @@ import Result from '../components/Result'
 import { EncryptionResult } from '../types'
 
 // TODO: Use web workers to improve performance
-const HomePage: React.FC = () => {
+const EncryptPage: React.FC = () => {
 	const [plainText, setPlainText] = useState('')
 	const [isEncryptModalOpen, setIsEncryptModalOpen] = useState(false)
 	const [result, setResult] = useState<EncryptionResult | null>(null)
-	const [isDekEnabled, setIsDekEnabled] = useState(true)
+	const [isDekEnabled, setIsDekEnabled] = useState(false)
 
 	const handlePlainTextChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
 		event,
@@ -116,4 +116,4 @@ const HomePage: React.FC = () => {
 	)
 }
 
-export default HomePage
+export default EncryptPage

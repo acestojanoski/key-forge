@@ -2,13 +2,17 @@ import { createHashRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
 import dynamic from './hoc/dynamic'
 
-const HomePage = dynamic(() => import('../features/encrypt/pages/HomePage'))
+const EncryptPage = dynamic(
+	() => import('../features/encrypt/pages/EncryptPage'),
+)
 
 const DecryptPage = dynamic(
 	() => import('../features/decrypt/pages/DecryptPage'),
 )
 
 const AboutPage = dynamic(() => import('../features/about/pages/AboutPage'))
+
+const DonatePage = dynamic(() => import('../features/donate/pages/DonatePage'))
 
 const router = createHashRouter([
 	{
@@ -17,7 +21,7 @@ const router = createHashRouter([
 		children: [
 			{
 				path: '',
-				element: <HomePage />,
+				element: <EncryptPage />,
 			},
 			{
 				path: 'decrypt',
@@ -26,6 +30,10 @@ const router = createHashRouter([
 			{
 				path: 'about',
 				element: <AboutPage />,
+			},
+			{
+				path: 'donate',
+				element: <DonatePage />,
 			},
 		],
 	},
