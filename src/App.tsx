@@ -12,7 +12,7 @@ const App: React.FC = () => {
 	return (
 		<CssVarsProvider
 			disableNestedContext
-			defaultMode="dark"
+			defaultMode="light"
 			modeStorageKey="theme"
 			theme={theme}
 		>
